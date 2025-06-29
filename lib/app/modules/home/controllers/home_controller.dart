@@ -1,9 +1,13 @@
-import 'package:get/get.dart';
+import 'package:citysync/app/helper/all_imports.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  List acts = [
+    {"title": AppStrings.donation, "image": AppImages.icDonation},
+    {"title": AppStrings.charity, "image": AppImages.icCharity},
+    {"title": AppStrings.campaign, "image": AppImages.icCampaign},
+    {"title": AppStrings.more, "image": AppImages.icMore},
+  ];
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +22,4 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

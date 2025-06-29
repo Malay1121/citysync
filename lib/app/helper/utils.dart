@@ -1,19 +1,32 @@
 import 'package:http/http.dart' as http;
+
 import 'all_imports.dart';
 
 GetStorage getStorage = GetStorage();
 
 List<Map> tabs = [
-  {"title": AppStrings.home, "icon": Icons.home_outlined, "page": Routes.HOME},
   {
-    "title": AppStrings.issues,
-    "icon": Icons.chat_bubble_outline,
+    "title": AppStrings.home,
+    "icon": Icons.home_outlined,
+    "selected_icon": Icons.home_rounded,
     "page": Routes.HOME,
   },
-  {"title": AppStrings.events, "icon": Icons.add, "page": Routes.HOME},
+  {
+    "title": AppStrings.issues,
+    "icon": Icons.report_problem_outlined,
+    "selected_icon": Icons.report_problem_rounded,
+    "page": Routes.HOME,
+  },
+  {
+    "title": AppStrings.events,
+    "icon": Icons.event_outlined,
+    "selected_icon": Icons.event_rounded,
+    "page": Routes.HOME,
+  },
   {
     "title": AppStrings.profile,
     "icon": Icons.person_outline,
+    "selected_icon": Icons.person,
     "page": Routes.HOME,
   },
 ];

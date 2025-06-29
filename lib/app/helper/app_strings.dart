@@ -1,5 +1,3 @@
-import 'all_imports.dart';
-
 class AppStrings {
   static String appName = "Citysync";
 
@@ -75,4 +73,24 @@ class AppStrings {
   static String messages = "Messages";
   static String recently = "Recently";
   static String search = "Search";
+
+  static String yourDeeds = "Your Deeds";
+  static String badges = "Badges";
+  static String donate = "Donate";
+  static String donation = "Donation";
+  static String campaign = "Campaign";
+  static String event = "Event";
+  static String charity = "Charity";
+  static String more = "More";
+  static String date = "Date";
+  static String time = "Time";
+  static String organization = "Organization";
+  static String raised = "Raised";
+  static String sharingKindness = "Sharing Kindness";
+  static String latestIssues = "Latest Issues";
+  static String newEvents = "New Events";
+  static String seeAll = "See All";
+  static String details = "Details";
+  static String register = "Register";
+  static String join = "Join";
 }

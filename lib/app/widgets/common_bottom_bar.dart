@@ -2,7 +2,9 @@ import 'package:citysync/app/helper/all_imports.dart';
 
 class CommonBottomBar extends StatefulWidget {
   CommonBottomBar({super.key, required this.selectedTab});
+
   String selectedTab;
+
   @override
   State<CommonBottomBar> createState() => _CommonBottomBarState();
 }
@@ -11,7 +13,7 @@ class _CommonBottomBarState extends State<CommonBottomBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 428.w(context),
+      width: 375.w(context),
       height: 65.h(context),
       child: Row(
         children: [
@@ -35,29 +37,32 @@ class _CommonBottomBarState extends State<CommonBottomBar> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        tab["icon"],
+                        tab["title"] == widget.selectedTab
+                            ? tab["selected_icon"]
+                            : tab["icon"],
                         color:
                             tab["title"] == widget.selectedTab
                                 ? ColorStyle.primary500
                                 : ColorStyle.greyscale400,
                         size: 24.t(context),
                       ),
-                      if (tab["title"] == widget.selectedTab)
-                        AppText(
-                          text: tab["title"],
-                          height: 12.h(context),
-                          centered: true,
-                          style:
-                              tab["title"] == widget.selectedTab
-                                  ? Styles.BodyXSmallSemibold(
-                                    context,
-                                    ColorStyle.primary500,
-                                  )
-                                  : Styles.BodyXSmallRegular(
-                                    context,
-                                    ColorStyle.greyscale400,
-                                  ),
-                        ),
+                      SizedBox(height: 4.h(context)),
+                      // if (tab["title"] == widget.selectedTab)
+                      AppText(
+                        text: tab["title"],
+                        height: 12.h(context),
+                        centered: true,
+                        style:
+                            tab["title"] == widget.selectedTab
+                                ? Styles.BodyXSmallSemibold(
+                                  context,
+                                  ColorStyle.primary500,
+                                )
+                                : Styles.BodyXSmallRegular(
+                                  context,
+                                  ColorStyle.greyscale400,
+                                ),
+                      ),
                     ],
                   ),
                 ),

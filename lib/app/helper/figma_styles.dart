@@ -45,8 +45,8 @@
 library figma_theme;
 
 import 'dart:ui';
+
 import 'package:citysync/app/helper/all_imports.dart';
-import 'package:flutter/material.dart';
 
 class FigmaTheme extends StatefulWidget {
   final Widget child;
@@ -650,6 +650,19 @@ class StylesDefault {
       decoration: TextDecoration.none,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w700,
+      height: 1,
+      letterSpacing: 0,
+    ),
+  );
+
+  Style Heading19pxExtraBold(BuildContext context, Color color) => Style._style(
+    _parent.copyWith(
+      fontFamily: "Manrope",
+      fontSize: 19.t(context),
+      color: color,
+      decoration: TextDecoration.none,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w800,
       height: 1,
       letterSpacing: 0,
     ),

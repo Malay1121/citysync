@@ -105,7 +105,7 @@ class SigninView extends GetView<SigninController> {
                         ),
                         SizedBox(width: 4.w(context)),
                         GestureDetector(
-                          onTap: () => Get.toNamed(Routes.SIGNUP),
+                          onTap: () => Get.offAllNamed(Routes.SIGNUP),
                           child: AppText(
                             text: AppStrings.signUp,
                             style: Styles.Body16pxBold(
