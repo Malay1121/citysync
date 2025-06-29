@@ -96,5 +96,12 @@ class AppStrings {
   static String unRegister = "Un-register";
   static String join = "Join";
   static String aboutTheEvent = "About the event";
+  static String aboutTheIssue = "About the issue";
   static String readMore = "Read More";
+  static String joinedOn = "Joined on";
+  static String upvotes = "Upvotes";
+  static String upvote = "Upvote";
+  static String removeVote = "Remove Vote";
+  static String issue = "Issue";
+  static String issuer = "Issuer";
 }

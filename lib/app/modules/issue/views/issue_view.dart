@@ -1,16 +1,15 @@
 import 'dart:math';
 
-import 'package:citysync/app/helper/all_imports.dart';
+import '../../../helper/all_imports.dart';
+import '../controllers/issue_controller.dart';
 
-import '../controllers/event_controller.dart';
-
-class EventView extends GetView<EventController> {
-  const EventView({super.key});
+class IssueView extends GetView<IssueController> {
+  const IssueView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EventController>(
-      init: EventController(),
+    return GetBuilder<IssueController>(
+      init: IssueController(),
       builder: (controller) {
         return SafeArea(
           child: Scaffold(
@@ -38,7 +37,7 @@ class EventView extends GetView<EventController> {
                                   ),
                                 ),
                                 AppText(
-                                  text: AppStrings.event,
+                                  text: AppStrings.issue,
                                   style: Styles.Heading3(
                                     context,
                                     ColorStyle.greyscale900,
@@ -50,7 +49,7 @@ class EventView extends GetView<EventController> {
                           ),
                           SizedBox(height: 16.h(context)),
                           CommonImage(
-                            imageUrl: getKey(controller.event, ["image"], ""),
+                            imageUrl: getKey(controller.issue, ["image"], ""),
                             fit: BoxFit.cover,
                             borderRadius: BorderRadius.circular(12),
                             height: 216.h(context),
@@ -64,24 +63,25 @@ class EventView extends GetView<EventController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   AppText(
-                                    text: getKey(controller.event, [
+                                    text: getKey(controller.issue, [
                                       "title",
                                     ], ""),
                                     style: Styles.Body16pxBold(
                                       context,
                                       ColorStyle.neutralBlack800,
                                     ),
-                                    width: 227.w(context),
+                                    width: 328.w(context),
                                     maxLines: null,
                                     minFontSize:
                                         16.t(context).floor().toDouble(),
+                                    // overflow: TextOverflow.ellipsis,
                                   ),
                                   SizedBox(height: 8.h(context)),
                                   AppText(
                                     text: formatDateTime(
                                       fromUtc(
-                                        getKey(controller.event, [
-                                          "start_time",
+                                        getKey(controller.issue, [
+                                          "created_at",
                                         ], ""),
                                       ),
                                     ),
@@ -89,7 +89,7 @@ class EventView extends GetView<EventController> {
                                       context,
                                       ColorStyle.neutralBlack700,
                                     ),
-                                    width: 227.w(context),
+                                    width: 328.w(context),
                                     maxLines: null,
                                     minFontSize:
                                         13.t(context).floor().toDouble(),
@@ -97,31 +97,10 @@ class EventView extends GetView<EventController> {
                                   ),
                                 ],
                               ),
-                              //TODO: Fix category text overflow
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 16.w(context),
-                                  vertical: 6.h(context),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: ColorStyle.primary50,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: AppText(
-                                  text: getKey(controller.event, [
-                                    "category",
-                                  ], ""),
-                                  style: Styles.Body11pxSemibold(
-                                    context,
-                                    ColorStyle.primary500,
-                                  ),
-                                  maxLines: null,
-                                  width: 60.w(context),
-                                ),
-                              ),
                             ],
                           ),
                           SizedBox(height: 12.h(context)),
+
                           Row(
                             children: [
                               Icon(
@@ -131,7 +110,7 @@ class EventView extends GetView<EventController> {
                               ),
                               SizedBox(width: 4.w(context)),
                               AppText(
-                                text: getKey(controller.event, [
+                                text: getKey(controller.issue, [
                                   "location",
                                 ], ""),
                                 overflow: TextOverflow.ellipsis,
@@ -144,9 +123,33 @@ class EventView extends GetView<EventController> {
                               ),
                             ],
                           ),
+                          SizedBox(height: 12.h(context)),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.keyboard_arrow_up_rounded,
+                                size: 16.t(context),
+                                color: ColorStyle.primary500,
+                              ),
+                              SizedBox(width: 4.w(context)),
+                              AppText(
+                                text:
+                                    getKey(controller.issue, ["upvotes"], "") +
+                                    " " +
+                                    AppStrings.upvotes,
+                                overflow: TextOverflow.ellipsis,
+                                minFontSize: 13.t(context).floorToDouble(),
+                                style: Styles.Body13pxSemibold(
+                                  context,
+                                  ColorStyle.neutralBlack500,
+                                ),
+                                width: 300.w(context),
+                              ),
+                            ],
+                          ),
                           SizedBox(height: 24.h(context)),
                           AppText(
-                            text: AppStrings.organizer,
+                            text: AppStrings.issuer,
                             style: Styles.Heading19pxBold(
                               context,
                               ColorStyle.neutralBlack800,
@@ -171,9 +174,9 @@ class EventView extends GetView<EventController> {
                               child: Row(
                                 children: [
                                   CommonImage(
-                                    imageUrl: getKey(controller.event, [
-                                      "organizer_data",
-                                      "image",
+                                    imageUrl: getKey(controller.issue, [
+                                      "issuer_data",
+                                      "profile_picture",
                                     ], ""),
                                     fit: BoxFit.cover,
                                     height: min(52.h(context), 52.w(context)),
@@ -186,38 +189,20 @@ class EventView extends GetView<EventController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(height: 6.h(context)),
-                                      Row(
-                                        children: [
-                                          AppText(
-                                            text: getKey(controller.event, [
-                                              "organizer_data",
-                                              "name",
-                                            ], ""),
-                                            style: Styles.Body16pxBold(
-                                              context,
-                                              ColorStyle.neutralBlack800,
-                                            ),
-                                          ),
-                                          SizedBox(width: 12.w(context)),
-                                          if (getKey(controller.event, [
-                                            "organizer_data",
-                                            "verified",
-                                          ], ""))
-                                            CommonImage(
-                                              imageUrl: AppImages.icVerified,
-                                              fit: BoxFit.contain,
-                                              width: 16.w(context),
-                                              height: 16.h(context),
-                                              type: "asset",
-                                            ),
-                                        ],
+                                      AppText(
+                                        text: getKey(controller.issue, [
+                                          "issuer_data",
+                                          "name",
+                                        ], ""),
+                                        style: Styles.Body16pxBold(
+                                          context,
+                                          ColorStyle.neutralBlack800,
+                                        ),
                                       ),
                                       SizedBox(height: 5.h(context)),
                                       AppText(
-                                        text: getKey(controller.event, [
-                                          "organizer_data",
-                                          "about",
-                                        ], ""),
+                                        text:
+                                            "${AppStrings.joinedOn} ${formatDateTime(fromUtc(getKey(controller.issue, ["issuer_data", "created_at"], "")))}",
                                         style: Styles.Body13pxRegular(
                                           context,
                                           ColorStyle.neutralBlack700,
@@ -235,7 +220,7 @@ class EventView extends GetView<EventController> {
                           ),
                           SizedBox(height: 24.h(context)),
                           AppText(
-                            text: AppStrings.aboutTheEvent,
+                            text: AppStrings.aboutTheIssue,
                             style: Styles.Body16pxBold(
                               context,
                               ColorStyle.neutralBlack800,
@@ -245,11 +230,18 @@ class EventView extends GetView<EventController> {
                           SizedBox(height: 4.h(context)),
                           AppText(
                             text:
-                                getKey(controller.event, [
+                                getKey(controller.issue, [
                                   "description",
                                 ], "").substring(
                                   0,
-                                  controller.readMore ? null : 524,
+                                  controller.readMore
+                                      ? null
+                                      : min(
+                                        getKey(controller.issue, [
+                                          "description",
+                                        ], "").length,
+                                        524,
+                                      ),
                                 ) +
                                 (controller.readMore ? "" : "..."),
                             style: Styles.Body13pxRegular(
@@ -282,11 +274,11 @@ class EventView extends GetView<EventController> {
                 StreamBuilder(
                   stream:
                       FirebaseFirestore.instance
-                          .collection("registrations")
+                          .collection("upvotes")
                           .where("user", isEqualTo: controller.user?.uid ?? "")
                           .where(
-                            "event",
-                            isEqualTo: getKey(controller.event, ["id"], "1"),
+                            "issue",
+                            isEqualTo: getKey(controller.issue, ["id"], "1"),
                           )
                           .snapshots(),
                   builder: (context, snapshot) {
@@ -306,22 +298,22 @@ class EventView extends GetView<EventController> {
                       onTap:
                           () async =>
                               registered
-                                  ? await DatabaseHelper.unregisterEvent(
-                                    eventId: getKey(controller.event, [
+                                  ? await DatabaseHelper.removeVote(
+                                    issueId: getKey(controller.issue, [
                                       "id",
                                     ], ""),
                                     userId: controller.user?.uid ?? "",
                                   )
-                                  : await DatabaseHelper.registerEvent(
-                                    eventId: getKey(controller.event, [
+                                  : await DatabaseHelper.upvote(
+                                    issueId: getKey(controller.issue, [
                                       "id",
                                     ], ""),
                                     userId: controller.user?.uid ?? "",
                                   ),
                       text:
                           registered
-                              ? AppStrings.unRegister
-                              : AppStrings.register,
+                              ? AppStrings.removeVote
+                              : AppStrings.upvote,
                       borderRadius: BorderRadius.circular(12),
                       backgroundColor:
                           registered

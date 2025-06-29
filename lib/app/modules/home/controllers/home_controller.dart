@@ -1,6 +1,6 @@
 import 'package:citysync/app/helper/all_imports.dart';
 
-class HomeController extends GetxController {
+class HomeController extends CommonController {
   List acts = [
     {"title": AppStrings.donation, "image": AppImages.icDonation},
     {"title": AppStrings.charity, "image": AppImages.icCharity},

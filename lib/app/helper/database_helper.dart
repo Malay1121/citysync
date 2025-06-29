@@ -64,6 +64,7 @@ class DatabaseHelper {
         await storageRef.putFile(File(data["profile_picture"]));
         String imagePath = await storageRef.getDownloadURL();
         data["profile_picture"] = imagePath;
+        data.addEntries({"created_at": toUtc(DateTime.now())}.entries);
         FirebaseAuth.instance.currentUser!.updateProfile(
           displayName: data["name"],
           photoURL: imagePath,
@@ -209,6 +210,97 @@ class DatabaseHelper {
       if (querySnapshot.docs.isNotEmpty) {
         await FirebaseFirestore.instance
             .collection("registrations")
+            .doc(querySnapshot.docs.first.id)
+            .delete();
+      }
+      EasyLoading.dismiss();
+      return {"status": "success"};
+    } on FirebaseException catch (error) {
+      EasyLoading.dismiss();
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future getIssues({int? limit}) async {
+    try {
+      List issues = [];
+      Query userSnapshot = FirebaseFirestore.instance
+          .collection("issues")
+          .orderBy("created_at");
+      if (limit != null) {
+        userSnapshot = userSnapshot.limit(limit);
+      }
+      QuerySnapshot snapshot = await userSnapshot.get();
+      issues.addAll(snapshot.docs.map((e) => e.data()));
+      QuerySnapshot users =
+          await FirebaseFirestore.instance
+              .collection("users")
+              .where(
+                "uid",
+                whereIn: issues.map((e) => getKey(e, ["issuer"], "")),
+              )
+              .get();
+      for (var user in users.docs) {
+        issues
+            .firstWhereOrNull(
+              (element) =>
+                  getKey(element, ["issuer"], "") ==
+                  getKey((user.data() as Map?) ?? {}, ["uid"], "1"),
+            )
+            .addEntries({"issuer_data": user.data()}.entries);
+      }
+      for (Map issue in issues) {
+        AggregateQuerySnapshot aggregateQuerySnapshot =
+            await FirebaseFirestore.instance
+                .collection("upvotes")
+                .where("issue", isEqualTo: getKey(issue, ["id"], ""))
+                .count()
+                .get();
+        issue.addEntries(
+          {"upvotes": (aggregateQuerySnapshot.count ?? 0).toString()}.entries,
+        );
+      }
+
+      return issues;
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future upvote({
+    required String issueId,
+    required String userId,
+  }) async {
+    try {
+      EasyLoading.show();
+      await FirebaseFirestore.instance.collection("upvotes").add({
+        "issue": issueId == "" ? null : issueId,
+        "user": userId == "" ? null : userId,
+        "created_at": toUtc(DateTime.now()),
+      });
+      EasyLoading.dismiss();
+      return {"status": "success"};
+    } on FirebaseException catch (error) {
+      EasyLoading.dismiss();
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future removeVote({
+    required String issueId,
+    required String userId,
+  }) async {
+    try {
+      EasyLoading.show();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance
+              .collection("upvotes")
+              .where("user", isEqualTo: userId == "" ? null : userId)
+              .where("issue", isEqualTo: issueId == "" ? null : issueId)
+              .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection("upvotes")
             .doc(querySnapshot.docs.first.id)
             .delete();
       }
