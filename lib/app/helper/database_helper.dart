@@ -1,5 +1,6 @@
 // import 'package:appwrite/models.dart';
 import 'package:citysync/app/helper/all_imports.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseHelper {
   static Future getApis() async {
@@ -136,6 +137,85 @@ class DatabaseHelper {
               .get();
       return userSnapshot.data();
     } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future getEvents({int? limit}) async {
+    try {
+      List events = [];
+      Query userSnapshot = FirebaseFirestore.instance
+          .collection("events")
+          .orderBy("start_time");
+      if (limit != null) {
+        userSnapshot = userSnapshot.limit(limit);
+      }
+      QuerySnapshot snapshot = await userSnapshot.get();
+      events.addAll(snapshot.docs.map((e) => e.data()));
+      QuerySnapshot organizations =
+          await FirebaseFirestore.instance
+              .collection("organizations")
+              .where(
+                "id",
+                whereIn: events.map((e) => getKey(e, ["organizer"], "")),
+              )
+              .get();
+      for (var organization in organizations.docs) {
+        events
+            .firstWhereOrNull(
+              (element) =>
+                  getKey(element, ["organizer"], "") ==
+                  getKey((organization.data() as Map?) ?? {}, ["id"], "1"),
+            )
+            .addEntries({"organizer_data": organization.data()}.entries);
+      }
+      return events;
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future registerEvent({
+    required String eventId,
+    required String userId,
+  }) async {
+    try {
+      EasyLoading.show();
+      await FirebaseFirestore.instance.collection("registrations").add({
+        "event": eventId == "" ? null : eventId,
+        "user": userId == "" ? null : userId,
+        "created_at": toUtc(DateTime.now()),
+      });
+      EasyLoading.dismiss();
+      return {"status": "success"};
+    } on FirebaseException catch (error) {
+      EasyLoading.dismiss();
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future unregisterEvent({
+    required String eventId,
+    required String userId,
+  }) async {
+    try {
+      EasyLoading.show();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance
+              .collection("registrations")
+              .where("user", isEqualTo: userId == "" ? null : userId)
+              .where("event", isEqualTo: eventId == "" ? null : eventId)
+              .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection("registrations")
+            .doc(querySnapshot.docs.first.id)
+            .delete();
+      }
+      EasyLoading.dismiss();
+      return {"status": "success"};
+    } on FirebaseException catch (error) {
+      EasyLoading.dismiss();
       showFirebaseError(error.message);
     }
   }

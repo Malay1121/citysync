@@ -85,6 +85,7 @@ class AppStrings {
   static String date = "Date";
   static String time = "Time";
   static String organization = "Organization";
+  static String organizer = "Organizer";
   static String raised = "Raised";
   static String sharingKindness = "Sharing Kindness";
   static String latestIssues = "Latest Issues";
@@ -92,5 +93,8 @@ class AppStrings {
   static String seeAll = "See All";
   static String details = "Details";
   static String register = "Register";
+  static String unRegister = "Un-register";
   static String join = "Join";
+  static String aboutTheEvent = "About the event";
+  static String readMore = "Read More";
 }

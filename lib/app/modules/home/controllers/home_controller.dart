@@ -11,6 +11,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.green,
+        //or set color with: Color(0xFF0000FF)
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
   }
 
   @override

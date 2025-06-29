@@ -2,6 +2,7 @@ import 'package:citysync/app/helper/all_imports.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 RxMap firebaseUser = RxMap();
+
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
@@ -28,7 +29,9 @@ void main() async {
   };
   initializeSize(360, 800);
   configureEasyLoading();
-
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(statusBarIconBrightness: Brightness.dark),
+  );
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return Container(
       decoration: BoxDecoration(

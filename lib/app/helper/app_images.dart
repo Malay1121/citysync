@@ -16,4 +16,5 @@ class AppImages {
   static String icCharity = "${svgsDirectory}ic_charity.png";
   static String icCampaign = "${svgsDirectory}ic_campaign.png";
   static String icMore = "${svgsDirectory}ic_more.png";
+  static String icVerified = "${svgsDirectory}ic_verified.png";
 }

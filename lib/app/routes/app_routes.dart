@@ -8,6 +8,7 @@ abstract class Routes {
   static const EMAIL_VERIFICATION = _Paths.EMAIL_VERIFICATION;
   static const SPLASH = _Paths.SPLASH;
   static const SIGNIN = _Paths.SIGNIN;
+  static const EVENT = _Paths.EVENT;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const EMAIL_VERIFICATION = '/email-verification';
   static const SPLASH = '/splash';
   static const SIGNIN = '/signin';
+  static const EVENT = '/event';
 }

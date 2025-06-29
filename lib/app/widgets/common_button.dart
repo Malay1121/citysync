@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:citysync/app/helper/all_imports.dart';
 
 class CommonButton extends StatefulWidget {
   CommonButton({
     super.key,
-    required this.text,
+    this.text,
     required this.onTap,
+    this.child,
     this.height,
     this.width,
     this.backgroundColor,
@@ -13,7 +13,9 @@ class CommonButton extends StatefulWidget {
     this.borderRadius,
     this.border,
   });
-  String text;
+
+  String? text;
+  Widget? child;
   VoidCallback onTap;
   double? height;
   double? width;
@@ -21,6 +23,7 @@ class CommonButton extends StatefulWidget {
   Color? textColor;
   Border? border;
   BorderRadius? borderRadius;
+
   @override
   State<CommonButton> createState() => _CommonButtonState();
 }
@@ -38,17 +41,19 @@ class _CommonButtonState extends State<CommonButton> {
           borderRadius: widget.borderRadius ?? BorderRadius.circular(100),
           border: widget.border,
         ),
-        child: Center(
-          child: AppText(
-            text: widget.text,
-            height: 22.h(context),
-            centered: true,
-            style: Styles.Body16pxSemibold(
-              context,
-              widget.textColor ?? ColorStyle.neutralWhite,
+        child:
+            widget.child ??
+            Center(
+              child: AppText(
+                text: widget.text ?? "",
+                height: 22.h(context),
+                centered: true,
+                style: Styles.Body16pxSemibold(
+                  context,
+                  widget.textColor ?? ColorStyle.neutralWhite,
+                ),
+              ),
             ),
-          ),
-        ),
       ),
     );
   }
