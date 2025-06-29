@@ -159,7 +159,9 @@ class EventsView extends GetView<EventsController> {
                                 return GestureDetector(
                                   onTap:
                                       () => Get.toNamed(
-                                        Routes.CREATE_ORGANIZATION,
+                                        organizationExist
+                                            ? Routes.CREATE_EVENT
+                                            : Routes.CREATE_ORGANIZATION,
                                       ),
                                   child: Container(
                                     width: 328.w(context),
@@ -185,6 +187,8 @@ class EventsView extends GetView<EventsController> {
                                         ),
                                         SizedBox(width: 12.w(context)),
                                         Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             AppText(
                                               text:
@@ -231,6 +235,7 @@ class EventsView extends GetView<EventsController> {
                     ),
                   ),
                 ),
+                CommonBottomBar(selectedTab: AppStrings.events),
               ],
             ),
           ),

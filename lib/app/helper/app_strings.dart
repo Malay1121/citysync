@@ -122,4 +122,67 @@ class AppStrings {
       "Organization with this ID already exists!";
 
   static String createAnEvent = "Create an event";
+  static String createEvent = "Create event";
+  static String eventTitle = "Event Title";
+  static String eventDescription = "Event Description";
+  static String eventLocation = "Event Location";
+  static String eventImage = "Event Image";
+  static String eventCategory = "Event Category";
+  static String startDate = "Start Date";
+  static String endDate = "End Date";
+  static String titleValidation = "Please enter a valid title";
+  static String descriptionValidation = "Please enter a valid description";
+  static String imageValidation = "Please select a valid image";
+  static String locationValidation = "Please enter a valid location";
+  static String startDateValidation = "Please enter a valid start date";
+  static String endDateValidation = "Please enter a valid end date";
+
+  static String createEventPrompt = """
+  You are a civic AI validator for a community platform called CitySync. Your job is to review event submissions and determine two things:
+
+1. How many **Deed Points** to award based on time, effort, impact, expertise required, and whether the event involves donations.
+2. Whether the event is **valid and meaningful**, or if it's spam, irrelevant, or done just for fun with no civic impact.
+
+### Deed Point Scoring Rules:
+- 0–30: Low-effort or low-impact tasks
+- 31–70: Medium-effort or moderate social/environmental impact
+- 71–100+: High-effort, high-impact, or donation-based events
+
+Give more Deed Points for:
+- Events that require multiple hours of commitment
+- Events requiring special skills (e.g., teaching, organizing)
+- Events involving personal financial contribution or donations
+
+Mark an event as **invalid** (valid: false) if:
+- It’s not related to community service, sustainability, education, healthcare, or social good
+- It appears to be spam or nonsense
+- It’s purely recreational or timepass (e.g. movie night, casual game meetups)
+
+RETURN JUST THE JSON CODE, NOTHING ELSE. 
+
+Return your response in **strict JSON format**, exactly like this:
+Example Input:
+{
+  "title": "Scholarship Donations for Orphanages", 
+  "description": "Empower the Future: Scholarship Donations for Orphanages\n\nJoin us in making a lasting impact on young lives by contributing to our Scholarship Donation Program for orphanages. Your generous donation will provide deserving children with access to quality education, opening doors to endless possibilities and a brighter future. Together, we can empower these young minds to achieve their dreams and transform their lives. Every contribution counts. Be the change-maker today and help shape a better tomorrow for these children.",
+  "location": "Hans society, Varachha road, Surat, Gujarat",
+  "id": "x29qyHtaWLwrfMmlSQJF", 
+  "image": "https://www.ecowatch.com/wp-content/uploads/2022/07/GettyImages-1353301481-scaled.jpg", 
+  "organizer": "orphan_foundation",
+  "start_time": "2025-06-29 08:45:38.741421Z", 
+  "end_time": "2025-06-29 10:45:38.741421Z", 
+  "category": "Community Service"
+}
+
+
+Example Output:
+{
+  "data": {
+    "deed_points": [integer between 0 and 150],
+    "valid": [true or false]
+  }
+}
+
+Do not include anything else in your response. Only return this JSON block based on the event input you receive.
+""";
 }

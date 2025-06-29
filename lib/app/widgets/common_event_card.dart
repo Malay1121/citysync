@@ -73,7 +73,7 @@ class _CommonEventCardState extends State<CommonEventCard> {
                     if (getKey(widget.event, [
                       "organizer_data",
                       "verified",
-                    ], ""))
+                    ], false))
                       CommonImage(
                         imageUrl: AppImages.icVerified,
                         fit: BoxFit.contain,

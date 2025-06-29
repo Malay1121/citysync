@@ -35,7 +35,7 @@ class CreateOrganizationView extends GetView<CreateOrganizationController> {
                               ),
                               SizedBox(width: 16.w(context)),
                               AppText(
-                                text: AppStrings.completeYourProfile,
+                                text: AppStrings.createAnOrganization,
                                 style: Styles.Heading19pxSemibold(
                                   context,
                                   ColorStyle.greyscale900,
@@ -108,7 +108,7 @@ class CreateOrganizationView extends GetView<CreateOrganizationController> {
                               CommonTextField(
                                 hintText: AppStrings.organizationUniqueId,
                                 controller: controller.uniqueIdController,
-                                textInputAction: TextInputAction.done,
+                                textInputAction: TextInputAction.next,
                               ),
                               if (!isEmptyString(
                                 controller.uniqueIdController.text,

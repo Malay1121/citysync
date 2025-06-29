@@ -1,5 +1,6 @@
 // import 'package:appwrite/models.dart';
 import 'package:citysync/app/helper/all_imports.dart';
+import 'package:citysync/app/helper/gemini_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseHelper {
@@ -343,6 +344,57 @@ class DatabaseHelper {
           .set(data);
 
       return data;
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future createEvent({required Map<String, dynamic> data}) async {
+    try {
+      Map geminiResult = await GeminiHelper.fetch(
+        systemPrompt: AppStrings.createEventPrompt,
+        text: jsonEncode(data),
+      );
+      if (getKey(geminiResult, ["data", "valid"], false) == true) {
+        var doc = await FirebaseFirestore.instance
+            .collection("events")
+            .add(data);
+        String id = doc.id;
+        Reference storageRef = FirebaseStorage.instance.ref().child(
+          "event_pictures/${id}.${data["image"].toString().split(".").last}",
+        );
+        await storageRef.putFile(File(data["image"]));
+        String imagePath = await storageRef.getDownloadURL();
+        data["image"] = imagePath;
+        data.addEntries(
+          {
+            "created_at": toUtc(DateTime.now()),
+            "deeds": getKey(geminiResult, ["data", "deed_points"], 0),
+          }.entries,
+        );
+        await FirebaseFirestore.instance
+            .collection("events")
+            .doc(id)
+            .update(data);
+
+        return data;
+      } else {
+        showSnackbar(message: "Create a valid event");
+      }
+      return null;
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future getOrganizationByUser({required String userId}) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance
+              .collection("organizations")
+              .where("admin", isEqualTo: userId)
+              .get();
+      return querySnapshot.docs.first.data();
     } on FirebaseException catch (error) {
       showFirebaseError(error.message);
     }

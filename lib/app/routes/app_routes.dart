@@ -12,6 +12,7 @@ abstract class Routes {
   static const ISSUE = _Paths.ISSUE;
   static const EVENTS = _Paths.EVENTS;
   static const CREATE_ORGANIZATION = _Paths.CREATE_ORGANIZATION;
+  static const CREATE_EVENT = _Paths.CREATE_EVENT;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const ISSUE = '/issue';
   static const EVENTS = '/events';
   static const CREATE_ORGANIZATION = '/create-organization';
+  static const CREATE_EVENT = '/create-event';
 }
