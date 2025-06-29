@@ -104,4 +104,22 @@ class AppStrings {
   static String removeVote = "Remove Vote";
   static String issue = "Issue";
   static String issuer = "Issuer";
+
+  static String createAnOrganization = "Create an organization";
+  static String createOrganization = "Create organization";
+  static String requiredToHostAnEvent =
+      "Required, if you want to organize and event";
+  static String organizationName = "Organization Name";
+  static String organizationUniqueId = "Organization Unique ID";
+  static String website = "Website";
+  static String aboutOrganization = "About Organization";
+  static String organizationIdAvailable = "Organization ID Available!";
+  static String organizationPictureValidation =
+      "Please select a valid organization picture";
+  static String organizationWebsiteValidation =
+      "Please enter a valid website address";
+  static String organizationAlreadyExists =
+      "Organization with this ID already exists!";
+
+  static String createAnEvent = "Create an event";
 }

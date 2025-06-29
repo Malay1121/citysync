@@ -311,4 +311,40 @@ class DatabaseHelper {
       showFirebaseError(error.message);
     }
   }
+
+  static Future organizationUniqueIdAvailable({
+    required String uniqueId,
+  }) async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance
+              .collection("organizations")
+              .where("id", isEqualTo: uniqueId)
+              .get();
+      return querySnapshot.docs.isEmpty;
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future createOrganization({required Map<String, dynamic> data}) async {
+    try {
+      Reference storageRef = FirebaseStorage.instance.ref().child(
+        "organization_pictures/${getKey(data, ["id"], null)}.${data["organization_picture"].toString().split(".").last}",
+      );
+      await storageRef.putFile(File(data["organization_picture"]));
+      String imagePath = await storageRef.getDownloadURL();
+      data["organization_picture"] = imagePath;
+      data.addEntries({"created_at": toUtc(DateTime.now())}.entries);
+
+      await FirebaseFirestore.instance
+          .collection("organizations")
+          .doc(getKey(data, ["id"], ""))
+          .set(data);
+
+      return data;
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
 }

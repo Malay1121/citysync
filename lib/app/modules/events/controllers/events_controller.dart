@@ -1,9 +1,6 @@
-import 'package:get/get.dart';
+import 'package:citysync/app/helper/all_imports.dart';
 
-class EventsController extends GetxController {
-  //TODO: Implement EventsController
-
-  final count = 0.obs;
+class EventsController extends CommonController {
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +15,4 @@ class EventsController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

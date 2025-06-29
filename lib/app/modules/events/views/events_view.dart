@@ -19,7 +19,7 @@ class EventsView extends GetView<EventsController> {
                       children: [
                         Container(
                           width: 360.w(context),
-                          height: 176.h(context),
+                          height: 100.h(context),
                           decoration: BoxDecoration(
                             color: ColorStyle.primary500,
                             borderRadius: BorderRadius.only(
@@ -135,19 +135,97 @@ class EventsView extends GetView<EventsController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 16.h(context)),
-                              Container(
-                                width: 328.w(context),
-                                height: 53.h(context),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: ColorStyle.greyscale100,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                              ),
                             ],
                           ),
+                        ),
+                        Column(
+                          children: [
+                            SizedBox(height: 16.h(context)),
+                            StreamBuilder(
+                              stream:
+                                  FirebaseFirestore.instance
+                                      .collection("organizations")
+                                      .where(
+                                        "admin",
+                                        isEqualTo: controller.user?.uid ?? "",
+                                      )
+                                      .snapshots(),
+                              builder: (context, snapshot) {
+                                if (snapshot.data == null) {
+                                  return SizedBox();
+                                }
+                                bool organizationExist =
+                                    snapshot.data!.docs.isNotEmpty;
+                                return GestureDetector(
+                                  onTap:
+                                      () => Get.toNamed(
+                                        Routes.CREATE_ORGANIZATION,
+                                      ),
+                                  child: Container(
+                                    width: 328.w(context),
+                                    height: 53.h(context),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: ColorStyle.greyscale100,
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w(context),
+                                      vertical: 8.h(context),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          organizationExist
+                                              ? Icons.add
+                                              : Icons.business,
+                                          size: 20.t(context),
+                                          color: ColorStyle.neutralGrey2600,
+                                        ),
+                                        SizedBox(width: 12.w(context)),
+                                        Column(
+                                          children: [
+                                            AppText(
+                                              text:
+                                                  organizationExist
+                                                      ? AppStrings.createAnEvent
+                                                      : AppStrings
+                                                          .createAnOrganization,
+                                              width: 242.w(context),
+                                              style: Styles.Body13pxMedium(
+                                                context,
+                                                ColorStyle.neutralBlack800,
+                                              ),
+                                            ),
+                                            if (!organizationExist)
+                                              SizedBox(height: 4.h(context)),
+                                            if (!organizationExist)
+                                              AppText(
+                                                text:
+                                                    AppStrings
+                                                        .requiredToHostAnEvent,
+                                                width: 242.w(context),
+                                                style: Styles.Body11pxRegular(
+                                                  context,
+                                                  ColorStyle.neutralGrey600,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                        Spacer(),
+                                        Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 20.t(context),
+                                          color: ColorStyle.greyscale700,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),

@@ -21,7 +21,7 @@ List<Map> tabs = [
     "title": AppStrings.events,
     "icon": Icons.event_outlined,
     "selected_icon": Icons.event_rounded,
-    "page": Routes.HOME,
+    "page": Routes.EVENTS,
   },
   {
     "title": AppStrings.profile,

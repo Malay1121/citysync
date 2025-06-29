@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/create_organization/bindings/create_organization_binding.dart';
+import '../modules/create_organization/views/create_organization_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
 import '../modules/email_verification/views/email_verification_view.dart';
 import '../modules/event/bindings/event_binding.dart';
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.EVENTS,
       page: () => const EventsView(),
       binding: EventsBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_ORGANIZATION,
+      page: () => const CreateOrganizationView(),
+      binding: CreateOrganizationBinding(),
     ),
   ];
 }
