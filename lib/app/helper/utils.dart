@@ -148,7 +148,9 @@ String toUtc(DateTime dateTime) {
 }
 
 String formatDateTime(DateTime dateTime) {
-  return DateFormat.yMMMMd().format(dateTime);
+  return DateFormat.Hm().format(dateTime) +
+      " on " +
+      DateFormat.yMMMMd().format(dateTime);
 }
 
 String formatDateTimeDifference(DateTime startDateTime, endDateTime) {

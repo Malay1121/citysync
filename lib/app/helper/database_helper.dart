@@ -143,6 +143,19 @@ class DatabaseHelper {
     }
   }
 
+  static Future getOrganization({required String organizationId}) async {
+    try {
+      DocumentSnapshot userSnapshot =
+          await FirebaseFirestore.instance
+              .collection("organizations")
+              .doc(organizationId)
+              .get();
+      return userSnapshot.data();
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
   static Future getEvents({int? limit}) async {
     try {
       List events = [];
@@ -162,6 +175,16 @@ class DatabaseHelper {
                 whereIn: events.map((e) => getKey(e, ["organizer"], "")),
               )
               .get();
+      for (var event in events) {
+        for (var organization in organizations.docs) {
+          if (getKey(event, ["organizer"], "1") == organization.id) {
+            int index = events.indexOf(event);
+            events[index].addEntries(
+              {"organizer_data": organization.data()}.entries,
+            );
+          }
+        }
+      }
       for (var organization in organizations.docs) {
         events
             .firstWhereOrNull(
@@ -241,14 +264,13 @@ class DatabaseHelper {
                 whereIn: issues.map((e) => getKey(e, ["issuer"], "")),
               )
               .get();
-      for (var user in users.docs) {
-        issues
-            .firstWhereOrNull(
-              (element) =>
-                  getKey(element, ["issuer"], "") ==
-                  getKey((user.data() as Map?) ?? {}, ["uid"], "1"),
-            )
-            .addEntries({"issuer_data": user.data()}.entries);
+      for (var issue in issues) {
+        for (var user in users.docs) {
+          if (getKey(issue, ["issuer"], "1") == user.id) {
+            int index = issues.indexOf(issue);
+            issues[index].addEntries({"issuer_data": user.data()}.entries);
+          }
+        }
       }
       for (Map issue in issues) {
         AggregateQuerySnapshot aggregateQuerySnapshot =
@@ -261,6 +283,8 @@ class DatabaseHelper {
           {"upvotes": (aggregateQuerySnapshot.count ?? 0).toString()}.entries,
         );
       }
+
+      issues = issues.reversed.toList();
 
       return issues;
     } on FirebaseException catch (error) {
@@ -370,6 +394,7 @@ class DatabaseHelper {
           {
             "created_at": toUtc(DateTime.now()),
             "deeds": getKey(geminiResult, ["data", "deed_points"], 0),
+            "id": id,
           }.entries,
         );
         await FirebaseFirestore.instance
@@ -436,6 +461,7 @@ class DatabaseHelper {
           {
             "created_at": toUtc(DateTime.now()),
             "deeds": getKey(geminiResult, ["data", "deed_points"], 0),
+            "id": id,
           }.entries,
         );
 

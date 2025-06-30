@@ -1,4 +1,5 @@
 import 'package:citysync/app/helper/all_imports.dart';
+import 'package:citysync/app/widgets/common_issue_card_big.dart';
 
 import '../controllers/issues_controller.dart';
 
@@ -12,6 +13,7 @@ class IssuesView extends GetView<IssuesController> {
       builder: (controller) {
         return SafeArea(
           child: Scaffold(
+            backgroundColor: ColorStyle.neutralWhite,
             body: Column(
               children: [
                 Expanded(
@@ -66,7 +68,7 @@ class IssuesView extends GetView<IssuesController> {
                                       Row(
                                         children: [
                                           CommonImage(
-                                            imageUrl: AppImages.icDeed,
+                                            imageUrl: AppImages.icDeedWhite,
                                             fit: BoxFit.contain,
                                             width: 20.w(context),
                                             height: 20.h(context),
@@ -189,6 +191,38 @@ class IssuesView extends GetView<IssuesController> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 20.h(context)),
+                            FirestorePagination(
+                              query: FirebaseFirestore.instance
+                                  .collection("issues")
+                                  .orderBy("created_at"),
+                              shrinkWrap: true,
+                              reverse: true,
+                              separatorBuilder: (p0, p1) {
+                                return SizedBox(height: 20.h(context));
+                              },
+                              itemBuilder: (BuildContext context, list, item) {
+                                Map issue = list[item].data() as Map;
+                                return FutureBuilder(
+                                  future: DatabaseHelper.getUser(
+                                    userId: getKey(issue, ["issuer"], ""),
+                                  ),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return SizedBox();
+                                    }
+                                    issue.addEntries(
+                                      {"issuer_data": snapshot.data}.entries,
+                                    );
+                                    return CommonIssueCardBig(
+                                      issue: issue,
+                                      user: controller.user!,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            SizedBox(height: 20.h(context)),
                           ],
                         ),
                       ],

@@ -147,6 +147,7 @@ class CreateIssueController extends CommonController {
         "issuer": user?.uid ?? "",
         "category": "Community Service",
         "problem_type": issueTypes[selectedIssueType!],
+        "upvotes": 0,
       };
       Map? issue = await DatabaseHelper.createIssue(data: issueDetails);
       if (issue != null) {

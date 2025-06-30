@@ -1,15 +1,15 @@
 import 'package:citysync/app/helper/all_imports.dart';
 
-class CommonEventCard extends StatefulWidget {
-  CommonEventCard({required this.event});
+class CommonEventCardBig extends StatefulWidget {
+  CommonEventCardBig({required this.event});
 
   Map event;
 
   @override
-  State<CommonEventCard> createState() => _CommonEventCardState();
+  State<CommonEventCardBig> createState() => _CommonEventCardBigState();
 }
 
-class _CommonEventCardState extends State<CommonEventCard> {
+class _CommonEventCardBigState extends State<CommonEventCardBig> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +19,7 @@ class _CommonEventCardState extends State<CommonEventCard> {
           CommonImage(
             imageUrl: getKey(widget.event, ["image"], ""),
             fit: BoxFit.cover,
-            width: 184.w(context),
+            width: 328.w(context),
             height: 105.h(context),
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(16),
@@ -28,7 +28,7 @@ class _CommonEventCardState extends State<CommonEventCard> {
             type: "network",
           ),
           Container(
-            width: 184.w(context),
+            width: 328.w(context),
             decoration: BoxDecoration(
               color: ColorStyle.greyscale0,
               borderRadius: BorderRadius.only(
@@ -85,7 +85,7 @@ class _CommonEventCardState extends State<CommonEventCard> {
                 SizedBox(height: 6.h(context)),
                 AppText(
                   text: getKey(widget.event, ["title"], ""),
-                  style: Styles.Body13pxBold(
+                  style: Styles.Body16pxBold(
                     context,
                     ColorStyle.neutralBlack800,
                   ),
@@ -112,7 +112,7 @@ class _CommonEventCardState extends State<CommonEventCard> {
                         context,
                         ColorStyle.neutralBlack500,
                       ),
-                      width: 130.w(context),
+                      width: 250.w(context),
                     ),
                   ],
                 ),
@@ -133,7 +133,34 @@ class _CommonEventCardState extends State<CommonEventCard> {
                         context,
                         ColorStyle.neutralBlack500,
                       ),
-                      width: 130.w(context),
+                      width: 250.w(context),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8.h(context)),
+                Row(
+                  children: [
+                    Center(
+                      child: CommonImage(
+                        imageUrl: AppImages.icDeedGreen,
+                        fit: BoxFit.contain,
+                        height: 16.h(context),
+                        width: 16.w(context),
+                        type: "asset",
+                      ),
+                    ),
+                    SizedBox(width: 4.w(context)),
+                    AppText(
+                      text:
+                          "Earn "
+                          "${getKey(widget.event, ["deeds"], 0)} Deeds",
+                      overflow: TextOverflow.ellipsis,
+                      minFontSize: 13.t(context).floorToDouble(),
+                      style: Styles.Body13pxSemibold(
+                        context,
+                        ColorStyle.primary500,
+                      ),
+                      width: 250.w(context),
                     ),
                   ],
                 ),
@@ -146,7 +173,7 @@ class _CommonEventCardState extends State<CommonEventCard> {
                         arguments: {"event": widget.event},
                       ),
                   height: 32.h(context),
-                  width: 160.w(context),
+                  width: 304.w(context),
                   borderRadius: BorderRadius.circular(6),
                 ),
               ],

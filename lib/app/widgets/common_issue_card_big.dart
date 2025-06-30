@@ -1,16 +1,16 @@
 import 'package:citysync/app/helper/all_imports.dart';
 
-class CommonIssueCard extends StatefulWidget {
-  CommonIssueCard({required this.issue, required this.user});
+class CommonIssueCardBig extends StatefulWidget {
+  CommonIssueCardBig({required this.issue, required this.user});
 
   Map issue;
   User user;
 
   @override
-  State<CommonIssueCard> createState() => _CommonIssueCardState();
+  State<CommonIssueCardBig> createState() => _CommonIssueCardBigState();
 }
 
-class _CommonIssueCardState extends State<CommonIssueCard> {
+class _CommonIssueCardBigState extends State<CommonIssueCardBig> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +20,7 @@ class _CommonIssueCardState extends State<CommonIssueCard> {
           CommonImage(
             imageUrl: getKey(widget.issue, ["image"], ""),
             fit: BoxFit.cover,
-            width: 184.w(context),
+            width: 328.w(context),
             height: 105.h(context),
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(16),
@@ -29,8 +29,7 @@ class _CommonIssueCardState extends State<CommonIssueCard> {
             type: "network",
           ),
           Container(
-            width: 184.w(context),
-            // height: 172.h(context),
+            width: 328.w(context),
             decoration: BoxDecoration(
               color: ColorStyle.greyscale0,
               borderRadius: BorderRadius.only(
@@ -94,7 +93,7 @@ class _CommonIssueCardState extends State<CommonIssueCard> {
                         context,
                         ColorStyle.neutralBlack500,
                       ),
-                      width: 130.w(context),
+                      width: 250.w(context),
                     ),
                   ],
                 ),
@@ -115,7 +114,7 @@ class _CommonIssueCardState extends State<CommonIssueCard> {
                         context,
                         ColorStyle.neutralBlack500,
                       ),
-                      width: 130.w(context),
+                      width: 250.w(context),
                     ),
                   ],
                 ),
@@ -149,13 +148,12 @@ class _CommonIssueCardState extends State<CommonIssueCard> {
                             context,
                             ColorStyle.neutralBlack500,
                           ),
-                          width: 130.w(context),
+                          width: 250.w(context),
                         ),
                       ],
                     );
                   },
                 ),
-                // Spacer(),
                 SizedBox(height: 12.h(context)),
                 Row(
                   children: [
@@ -167,7 +165,7 @@ class _CommonIssueCardState extends State<CommonIssueCard> {
                             arguments: {"issue": widget.issue},
                           ),
                       height: 32.h(context),
-                      width: 120.w(context),
+                      width: 264.w(context),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     SizedBox(width: 8.w(context)),

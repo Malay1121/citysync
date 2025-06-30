@@ -11,7 +11,8 @@ class AppImages {
   static String checkMail = "${imagesDirectory}checkmail.png";
 
   static String icEye = "${svgsDirectory}ic_eye.png";
-  static String icDeed = "${svgsDirectory}ic_deed_white.png";
+  static String icDeedWhite = "${svgsDirectory}ic_deed_white.png";
+  static String icDeedGreen = "${svgsDirectory}ic_deed_green.png";
   static String icDonation = "${svgsDirectory}ic_donation.png";
   static String icCharity = "${svgsDirectory}ic_charity.png";
   static String icCampaign = "${svgsDirectory}ic_campaign.png";

@@ -1,3 +1,5 @@
+import 'package:citysync/app/widgets/common_event_card_big.dart';
+
 import '../../../helper/all_imports.dart';
 import '../controllers/events_controller.dart';
 
@@ -11,6 +13,8 @@ class EventsView extends GetView<EventsController> {
       builder: (controller) {
         return SafeArea(
           child: Scaffold(
+            backgroundColor: ColorStyle.neutralWhite,
+
             body: Column(
               children: [
                 Expanded(
@@ -65,7 +69,7 @@ class EventsView extends GetView<EventsController> {
                                       Row(
                                         children: [
                                           CommonImage(
-                                            imageUrl: AppImages.icDeed,
+                                            imageUrl: AppImages.icDeedWhite,
                                             fit: BoxFit.contain,
                                             width: 20.w(context),
                                             height: 20.h(context),
@@ -229,6 +233,37 @@ class EventsView extends GetView<EventsController> {
                                 );
                               },
                             ),
+                            SizedBox(height: 20.h(context)),
+                            FirestorePagination(
+                              query: FirebaseFirestore.instance
+                                  .collection("events")
+                                  .orderBy("created_at"),
+                              shrinkWrap: true,
+                              reverse: true,
+                              separatorBuilder: (p0, p1) {
+                                return SizedBox(height: 20.h(context));
+                              },
+                              itemBuilder: (BuildContext context, list, item) {
+                                Map issue = list[item].data() as Map;
+                                return FutureBuilder(
+                                  future: DatabaseHelper.getOrganization(
+                                    organizationId: getKey(issue, [
+                                      "organizer",
+                                    ], ""),
+                                  ),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.data == null) {
+                                      return SizedBox();
+                                    }
+                                    issue.addEntries(
+                                      {"organizer_data": snapshot.data}.entries,
+                                    );
+                                    return CommonEventCardBig(event: issue);
+                                  },
+                                );
+                              },
+                            ),
+                            SizedBox(height: 20.h(context)),
                           ],
                         ),
                       ],
