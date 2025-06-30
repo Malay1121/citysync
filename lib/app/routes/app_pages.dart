@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/attendance/bindings/attendance_binding.dart';
+import '../modules/attendance/views/attendance_view.dart';
 import '../modules/create_event/bindings/create_event_binding.dart';
 import '../modules/create_event/views/create_event_view.dart';
 import '../modules/create_issue/bindings/create_issue_binding.dart';
@@ -18,6 +20,8 @@ import '../modules/issue/bindings/issue_binding.dart';
 import '../modules/issue/views/issue_view.dart';
 import '../modules/issues/bindings/issues_binding.dart';
 import '../modules/issues/views/issues_view.dart';
+import '../modules/manage_events/bindings/manage_events_binding.dart';
+import '../modules/manage_events/views/manage_events_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
@@ -92,6 +96,16 @@ class AppPages {
       name: _Paths.ISSUES,
       page: () => const IssuesView(),
       binding: IssuesBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGE_EVENTS,
+      page: () => const ManageEventsView(),
+      binding: ManageEventsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ATTENDANCE,
+      page: () => const AttendanceView(),
+      binding: AttendanceBinding(),
     ),
   ];
 }
