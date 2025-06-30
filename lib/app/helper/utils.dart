@@ -15,7 +15,7 @@ List<Map> tabs = [
     "title": AppStrings.issues,
     "icon": Icons.report_problem_outlined,
     "selected_icon": Icons.report_problem_rounded,
-    "page": Routes.HOME,
+    "page": Routes.ISSUES,
   },
   {
     "title": AppStrings.events,

@@ -1,54 +1,38 @@
 import 'package:citysync/app/helper/all_imports.dart';
 
-class SignupController extends AnonCommonController {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
+class CreateIssueController extends CommonController {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
 
-  List genders = [AppStrings.male, AppStrings.female, AppStrings.other];
-  int? selectedGender;
+  File? issuePicture;
 
-  File? profilePicture;
+  List issueTypes = [
+    AppStrings.daily,
+    AppStrings.frequently,
+    AppStrings.rarely,
+  ];
+  int? selectedIssueType;
 
-  void selectGender(String gender) {
-    selectedGender = genders.indexOf(gender);
+  void selectIssueType(String issueType) {
+    selectedIssueType = issueTypes.indexOf(issueType);
     update();
   }
 
-  bool isGenderSelected(String gender) {
-    return genders.indexOf(gender) == selectedGender;
-  }
-
-  int page = 0;
-  int maxPage = 1;
-
-  void next() {
-    if (page < maxPage) {
-      if (page0Validation()) {
-        page++;
-      }
-    }
-    update();
-  }
-
-  void previous() {
-    if (page > 0) {
-      page--;
-    }
-    update();
+  bool isIssueTypeSelected(String issueType) {
+    return issueTypes.indexOf(issueType) == selectedIssueType;
   }
 
   void pickImage(ImageSource source) async {
     XFile? image = await ImagePicker().pickImage(source: source);
     if (image != null) {
-      profilePicture = File(image.path);
+      issuePicture = File(image.path);
       update();
     }
     Get.back();
   }
 
-  void selectProfilePicture() async {
+  void selectIssuePicture() async {
     Get.bottomSheet(
       Container(
         width: 360.w(Get.context!),
@@ -147,92 +131,49 @@ class SignupController extends AnonCommonController {
     );
   }
 
-  void signUp() async {
-    if (page0Validation() && await page1Validation()) {
+  void createIssue() async {
+    if (await pageValidation()) {
       EasyLoading.show();
 
-      Map<String, dynamic> userDetails = {
-        "name": nameController.text,
-        "email": emailController.text,
-        "username": usernameController.text,
-        "gender": genders[selectedGender!],
-        "profile_picture": profilePicture!.path,
-        "password": generateMd5(passwordController.text),
-        "deeds": 0,
-      };
-      User? user = await DatabaseHelper.createUser(data: userDetails);
-      if (user != null) {
-        Get.toNamed(
-          Routes.EMAIL_VERIFICATION,
-          arguments: {"route": Routes.HOME},
-        );
-      }
-      EasyLoading.dismiss();
-    }
-  }
-
-  void logIn() async {
-    if (page0Validation() && await page1Validation()) {
-      EasyLoading.show();
-      Map<String, dynamic>? userDetails = {
-        "name": nameController.text,
-        "email": emailController.text,
-        "password": generateMd5(passwordController.text),
-      };
-      UserCredential? result = await DatabaseHelper.loginUser(
-        data: userDetails,
+      Map organization = await DatabaseHelper.getOrganizationByUser(
+        userId: user?.uid ?? "",
       );
-      if (result != null) {
-        if (result.user != null) {
-          if (result.user!.emailVerified) {
-            Get.offAllNamed(Routes.HOME);
-          } else {
-            Get.toNamed(
-              Routes.EMAIL_VERIFICATION,
-              arguments: {"route": Routes.HOME},
-            );
-          }
-        }
+
+      Map<String, dynamic> issueDetails = {
+        "title": titleController.text,
+        "description": descriptionController.text,
+        "location": locationController.text,
+        "image": issuePicture!.path,
+        "issuer": user?.uid ?? "",
+        "category": "Community Service",
+        "problem_type": issueTypes[selectedIssueType!],
+      };
+      Map? issue = await DatabaseHelper.createIssue(data: issueDetails);
+      if (issue != null) {
+        Get.back();
       }
       EasyLoading.dismiss();
     }
   }
 
-  bool page0Validation({bool snackbar = true}) {
-    if (emailController.text.isEmpty || !validateEmail(emailController.text)) {
-      if (snackbar == true) showSnackbar(message: AppStrings.emailValidation);
+  Future<bool> pageValidation({bool snackbar = true}) async {
+    if (issuePicture == null) {
+      if (snackbar == true) showSnackbar(message: AppStrings.imageValidation);
       return false;
-    } else if (passwordController.text.isEmpty ||
-        !validatePassword(passwordController.text)) {
+    } else if (isEmptyString(titleController.text)) {
+      if (snackbar == true) showSnackbar(message: AppStrings.titleValidation);
+      return false;
+    } else if (isEmptyString(locationController.text)) {
       if (snackbar == true)
-        showSnackbar(message: AppStrings.passwordValidation);
+        showSnackbar(message: AppStrings.locationValidation);
       return false;
-    }
-    return true;
-  }
-
-  Future<bool> page1Validation({bool snackbar = true}) async {
-    if (profilePicture == null) {
-      if (snackbar == true)
-        showSnackbar(message: AppStrings.profilePictureValidation);
-      return false;
-    } else if (isEmptyString(nameController.text)) {
-      if (snackbar == true) showSnackbar(message: AppStrings.nameValidation);
-      return false;
-    } else if (isEmptyString(usernameController.text) ||
-        !(await DatabaseHelper.usernameAvailable(
-          username: usernameController.text,
-        ))) {
+    } else if (isEmptyString(descriptionController.text)) {
       if (snackbar == true) {
-        showSnackbar(
-          message:
-              "${AppStrings.usernameIsEmpty} or ${AppStrings.usernameAlreadyExists}",
-        );
+        showSnackbar(message: AppStrings.descriptionValidation);
       }
       return false;
-    } else if (selectedGender == null) {
-      if (snackbar == true) showSnackbar(message: AppStrings.genderValidation);
-      return false;
+    } else if (selectedIssueType == null) {
+      if (snackbar == true) showSnackbar(message: AppStrings.issueType);
     }
     return true;
   }

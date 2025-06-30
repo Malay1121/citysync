@@ -136,6 +136,17 @@ class AppStrings {
   static String locationValidation = "Please enter a valid location";
   static String startDateValidation = "Please enter a valid start date";
   static String endDateValidation = "Please enter a valid end date";
+  static String issueTypeValidation = "Please select a valid issue type";
+  static String createAnIssue = "Create an issue";
+  static String createIssue = "Create issue";
+  static String issueTitle = "Issue Title";
+  static String issueDescription = "Issue Description";
+  static String issueLocation = "Issue Location";
+  static String issueImage = "Issue Image";
+  static String issueType = "Issue Type";
+  static String daily = "Daily";
+  static String frequently = "Frequently";
+  static String rarely = "Rarely";
 
   static String createEventPrompt = """
   You are a civic AI validator for a community platform called CitySync. Your job is to review event submissions and determine two things:
@@ -179,6 +190,56 @@ Example Output:
 {
   "data": {
     "deed_points": [integer between 0 and 150],
+    "valid": [true or false]
+  }
+}
+
+Do not include anything else in your response. Only return this JSON block based on the event input you receive.
+""";
+  static String createIssuePrompt = """
+You are a civic AI assistant for a platform called CitySync. When a citizen submits a civic issue (such as a pothole, water leak, or power outage), your task is to review the report and return:
+
+1. A small but fair number of **Deed Points** to reward the user for helping improve their city.
+2. Whether the report is **valid and meaningful**, or if it's spam, fake, or lacks civic relevance.
+
+### Deed Point Guidelines:
+Assign points based on the **effort, uniqueness, and civic impact** of the issue report:
+- Give higher points if:
+  - The issue is clearly described
+  - It includes a photo or detailed context
+  - It hasn’t already been reported many times
+  - It affects public health, safety, or large communities
+- Give lower points for:
+  - Generic, vague, or duplicate issues
+  - Low-impact problems (e.g. graffiti on wall)
+  - Reports lacking description or visual proof
+
+🛑 Mark a report as **invalid** (valid: false) if:
+- It is spam, nonsense, or irrelevant to civic problems
+- It is a personal complaint (e.g. "my friend was rude")
+- It appears to be false or unserious (e.g. "aliens stole my mailbox")
+
+🧾 Return only this JSON format in your response:
+
+RETURN JUST THE JSON CODE, NOTHING ELSE. 
+
+Return your response in **strict JSON format**, exactly like this:
+Example Input:
+{
+  "title": "BRTS: More buses to be added in the route 23, can reduce from route 106", 
+  "description": "While travelling in BRTS, I have observed that the route 23 is really crowded and more buses are needed there. At the same time, 106 is usually empty and buses can be reduced there. If route 23 gets more buses, the traffic can be divided into buses as the frequency will increase.",
+  "location": "Surat, Gujarat",
+  "id": "x29qyHtaWLwrfMmlSQJF", 
+  "image": "https://www.ecowatch.com/wp-content/uploads/2022/07/GettyImages-1353301481-scaled.jpg", 
+  "issuer": "PcJd25SK9M1xXdQKlvV9",
+  "problem_type": "Daily"
+}
+
+
+Example Output:
+{
+  "data": {
+    "deed_points": [integer between 1 and 15],
     "valid": [true or false]
   }
 }

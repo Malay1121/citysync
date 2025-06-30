@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/create_event/bindings/create_event_binding.dart';
 import '../modules/create_event/views/create_event_view.dart';
+import '../modules/create_issue/bindings/create_issue_binding.dart';
+import '../modules/create_issue/views/create_issue_view.dart';
 import '../modules/create_organization/bindings/create_organization_binding.dart';
 import '../modules/create_organization/views/create_organization_view.dart';
 import '../modules/email_verification/bindings/email_verification_binding.dart';
@@ -14,6 +16,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/issue/bindings/issue_binding.dart';
 import '../modules/issue/views/issue_view.dart';
+import '../modules/issues/bindings/issues_binding.dart';
+import '../modules/issues/views/issues_view.dart';
 import '../modules/signin/bindings/signin_binding.dart';
 import '../modules/signin/views/signin_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
@@ -78,6 +82,16 @@ class AppPages {
       name: _Paths.CREATE_EVENT,
       page: () => const CreateEventView(),
       binding: CreateEventBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_ISSUE,
+      page: () => const CreateIssueView(),
+      binding: CreateIssueBinding(),
+    ),
+    GetPage(
+      name: _Paths.ISSUES,
+      page: () => const IssuesView(),
+      binding: IssuesBinding(),
     ),
   ];
 }

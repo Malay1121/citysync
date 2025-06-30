@@ -399,4 +399,72 @@ class DatabaseHelper {
       showFirebaseError(error.message);
     }
   }
+
+  static Future getUserDeeds({required String userId}) async {
+    try {
+      DocumentSnapshot querySnapshot =
+          await FirebaseFirestore.instance
+              .collection("users")
+              .doc(userId)
+              .get();
+
+      return getKey((querySnapshot.data() as Map?) ?? {}, ["deeds"], 0);
+    } on FirebaseException catch (error) {
+      showFirebaseError(error.message);
+    }
+  }
+
+  static Future createIssue({required Map<String, dynamic> data}) async {
+    try {
+      EasyLoading.show();
+      Map geminiResult = await GeminiHelper.fetch(
+        systemPrompt: AppStrings.createIssuePrompt,
+        text: jsonEncode(data),
+      );
+      if (getKey(geminiResult, ["data", "valid"], false) == true) {
+        var doc = await FirebaseFirestore.instance
+            .collection("issues")
+            .add(data);
+        String id = doc.id;
+        Reference storageRef = FirebaseStorage.instance.ref().child(
+          "issue_pictures/${id}.${data["image"].toString().split(".").last}",
+        );
+        await storageRef.putFile(File(data["image"]));
+        String imagePath = await storageRef.getDownloadURL();
+        data["image"] = imagePath;
+        data.addEntries(
+          {
+            "created_at": toUtc(DateTime.now()),
+            "deeds": getKey(geminiResult, ["data", "deed_points"], 0),
+          }.entries,
+        );
+
+        await FirebaseFirestore.instance
+            .collection("issues")
+            .doc(id)
+            .update(data);
+
+        int deeds = await getUserDeeds(userId: getKey(data, ["issuer"], ""));
+        deeds += getKey(data, ["deeds"], 0) as int;
+        await editUser(
+          userId: getKey(data, ["issuer"], ""),
+          data: {"deeds": deeds},
+        );
+        EasyLoading.dismiss();
+
+        return data;
+      } else {
+        EasyLoading.dismiss();
+
+        showSnackbar(message: "Create a valid issue");
+      }
+      EasyLoading.dismiss();
+
+      return null;
+    } on FirebaseException catch (error) {
+      EasyLoading.dismiss();
+
+      showFirebaseError(error.message);
+    }
+  }
 }
