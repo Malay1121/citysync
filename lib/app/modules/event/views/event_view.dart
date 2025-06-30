@@ -144,6 +144,33 @@ class EventView extends GetView<EventController> {
                               ),
                             ],
                           ),
+                          SizedBox(height: 4.h(context)),
+                          Row(
+                            children: [
+                              Center(
+                                child: CommonImage(
+                                  imageUrl: AppImages.icDeedGreen,
+                                  fit: BoxFit.contain,
+                                  height: 16.h(context),
+                                  width: 16.w(context),
+                                  type: "asset",
+                                ),
+                              ),
+                              SizedBox(width: 4.w(context)),
+                              AppText(
+                                text:
+                                    "Earn "
+                                    "${getKey(controller.event, ["deeds"], 0)} Deeds",
+                                overflow: TextOverflow.ellipsis,
+                                minFontSize: 13.t(context).floorToDouble(),
+                                style: Styles.Body13pxSemibold(
+                                  context,
+                                  ColorStyle.primary500,
+                                ),
+                                width: 250.w(context),
+                              ),
+                            ],
+                          ),
                           SizedBox(height: 24.h(context)),
                           AppText(
                             text: AppStrings.organizer,
@@ -153,6 +180,7 @@ class EventView extends GetView<EventController> {
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
+
                           SizedBox(height: 8.h(context)),
                           Container(
                             height: 76.h(context),
@@ -249,7 +277,14 @@ class EventView extends GetView<EventController> {
                                   "description",
                                 ], "").substring(
                                   0,
-                                  controller.readMore ? null : 524,
+                                  controller.readMore
+                                      ? null
+                                      : min(
+                                        524,
+                                        getKey(controller.event, [
+                                          "description",
+                                        ], "").length,
+                                      ),
                                 ) +
                                 (controller.readMore ? "" : "..."),
                             style: Styles.Body13pxRegular(

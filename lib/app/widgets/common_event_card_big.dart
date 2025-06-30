@@ -1,9 +1,10 @@
 import 'package:citysync/app/helper/all_imports.dart';
 
 class CommonEventCardBig extends StatefulWidget {
-  CommonEventCardBig({required this.event});
+  CommonEventCardBig({required this.event, this.manage = false});
 
   Map event;
+  bool manage;
 
   @override
   State<CommonEventCardBig> createState() => _CommonEventCardBigState();
@@ -166,10 +167,13 @@ class _CommonEventCardBigState extends State<CommonEventCardBig> {
                 ),
                 SizedBox(height: 12.h(context)),
                 CommonButton(
-                  text: AppStrings.details,
+                  text:
+                      widget.manage
+                          ? AppStrings.participants
+                          : AppStrings.details,
                   onTap:
                       () => Get.toNamed(
-                        Routes.EVENT,
+                        widget.manage ? Routes.ATTENDANCE : Routes.EVENT,
                         arguments: {"event": widget.event},
                       ),
                   height: 32.h(context),

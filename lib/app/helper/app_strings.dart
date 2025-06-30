@@ -123,6 +123,12 @@ class AppStrings {
 
   static String createAnEvent = "Create an event";
   static String createEvent = "Create event";
+  static String manageEvents = "Manage events";
+  static String manageEvent = "Manage event";
+  static String attendance = "Attendance";
+  static String markAttendance = "Mark Attendance";
+  static String participants = "Participants";
+  static String present = "Present";
   static String eventTitle = "Event Title";
   static String eventDescription = "Event Description";
   static String eventLocation = "Event Location";

@@ -66,24 +66,40 @@ class EventsView extends GetView<EventsController> {
                                         ],
                                       ),
                                       SizedBox(height: 4.h(context)),
-                                      Row(
-                                        children: [
-                                          CommonImage(
-                                            imageUrl: AppImages.icDeedWhite,
-                                            fit: BoxFit.contain,
-                                            width: 20.w(context),
-                                            height: 20.h(context),
-                                            type: "asset",
-                                          ),
-                                          SizedBox(width: 4.w(context)),
-                                          AppText(
-                                            text: "200",
-                                            style: Styles.Heading19pxExtraBold(
-                                              context,
-                                              ColorStyle.surface500,
-                                            ),
-                                          ),
-                                        ],
+                                      StreamBuilder(
+                                        stream:
+                                            FirebaseFirestore.instance
+                                                .collection("users")
+                                                .doc(controller.user?.uid ?? "")
+                                                .snapshots(),
+                                        builder: (context, snapshot) {
+                                          int deeds = getKey(
+                                            (snapshot.data?.data() as Map?) ??
+                                                {},
+                                            ["deeds"],
+                                            0,
+                                          );
+                                          return Row(
+                                            children: [
+                                              CommonImage(
+                                                imageUrl: AppImages.icDeedWhite,
+                                                fit: BoxFit.contain,
+                                                width: 20.w(context),
+                                                height: 20.h(context),
+                                                type: "asset",
+                                              ),
+                                              SizedBox(width: 4.w(context)),
+                                              AppText(
+                                                text: deeds.toString(),
+                                                style:
+                                                    Styles.Heading19pxExtraBold(
+                                                      context,
+                                                      ColorStyle.surface500,
+                                                    ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
@@ -233,11 +249,59 @@ class EventsView extends GetView<EventsController> {
                                 );
                               },
                             ),
+                            SizedBox(height: 10.h(context)),
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.MANAGE_EVENTS),
+                              child: Container(
+                                width: 328.w(context),
+                                height: 53.h(context),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorStyle.greyscale100,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w(context),
+                                  vertical: 8.h(context),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.settings,
+                                      size: 20.t(context),
+                                      color: ColorStyle.neutralGrey2600,
+                                    ),
+                                    SizedBox(width: 12.w(context)),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        AppText(
+                                          text: AppStrings.manageEvents,
+                                          width: 242.w(context),
+                                          style: Styles.Body13pxMedium(
+                                            context,
+                                            ColorStyle.neutralBlack800,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 20.t(context),
+                                      color: ColorStyle.greyscale700,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             SizedBox(height: 20.h(context)),
                             FirestorePagination(
                               query: FirebaseFirestore.instance
                                   .collection("events")
-                                  .orderBy("created_at"),
+                                  .orderBy("start_time"),
                               shrinkWrap: true,
                               reverse: true,
                               separatorBuilder: (p0, p1) {

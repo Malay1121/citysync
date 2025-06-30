@@ -33,7 +33,6 @@ class CreateOrganizationView extends GetView<CreateOrganizationController> {
                                   size: 24.t(context),
                                 ),
                               ),
-                              SizedBox(width: 16.w(context)),
                               AppText(
                                 text: AppStrings.createAnOrganization,
                                 style: Styles.Heading19pxSemibold(
@@ -41,7 +40,7 @@ class CreateOrganizationView extends GetView<CreateOrganizationController> {
                                   ColorStyle.greyscale900,
                                 ),
                               ),
-                              SizedBox(width: 40.t(context)),
+                              SizedBox(width: 24.t(context)),
                             ],
                           ),
                           SizedBox(height: 33.5.h(context)),

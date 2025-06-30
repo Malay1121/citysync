@@ -134,7 +134,9 @@ class IssueView extends GetView<IssueController> {
                               SizedBox(width: 4.w(context)),
                               AppText(
                                 text:
-                                    getKey(controller.issue, ["upvotes"], "") +
+                                    getKey(controller.issue, [
+                                      "upvotes",
+                                    ], 0).toString() +
                                     " " +
                                     AppStrings.upvotes,
                                 overflow: TextOverflow.ellipsis,

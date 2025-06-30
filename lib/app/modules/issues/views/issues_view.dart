@@ -65,24 +65,40 @@ class IssuesView extends GetView<IssuesController> {
                                         ],
                                       ),
                                       SizedBox(height: 4.h(context)),
-                                      Row(
-                                        children: [
-                                          CommonImage(
-                                            imageUrl: AppImages.icDeedWhite,
-                                            fit: BoxFit.contain,
-                                            width: 20.w(context),
-                                            height: 20.h(context),
-                                            type: "asset",
-                                          ),
-                                          SizedBox(width: 4.w(context)),
-                                          AppText(
-                                            text: "200",
-                                            style: Styles.Heading19pxExtraBold(
-                                              context,
-                                              ColorStyle.surface500,
-                                            ),
-                                          ),
-                                        ],
+                                      StreamBuilder(
+                                        stream:
+                                            FirebaseFirestore.instance
+                                                .collection("users")
+                                                .doc(controller.user?.uid ?? "")
+                                                .snapshots(),
+                                        builder: (context, snapshot) {
+                                          int deeds = getKey(
+                                            (snapshot.data?.data() as Map?) ??
+                                                {},
+                                            ["deeds"],
+                                            0,
+                                          );
+                                          return Row(
+                                            children: [
+                                              CommonImage(
+                                                imageUrl: AppImages.icDeedWhite,
+                                                fit: BoxFit.contain,
+                                                width: 20.w(context),
+                                                height: 20.h(context),
+                                                type: "asset",
+                                              ),
+                                              SizedBox(width: 4.w(context)),
+                                              AppText(
+                                                text: deeds.toString(),
+                                                style:
+                                                    Styles.Heading19pxExtraBold(
+                                                      context,
+                                                      ColorStyle.surface500,
+                                                    ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),

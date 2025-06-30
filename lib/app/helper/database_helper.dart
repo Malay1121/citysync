@@ -209,6 +209,7 @@ class DatabaseHelper {
       await FirebaseFirestore.instance.collection("registrations").add({
         "event": eventId == "" ? null : eventId,
         "user": userId == "" ? null : userId,
+        "present": false,
         "created_at": toUtc(DateTime.now()),
       });
       EasyLoading.dismiss();

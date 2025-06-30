@@ -1,16 +1,39 @@
-# citysync
+# 🌆 CitySync
 
-A new Flutter project.
+**CitySync** is a mobile-first civic engagement platform that empowers citizens to report public
+issues, participate in local community events, and earn **Deed Points** for contributing to social
+good. It bridges the gap between citizens, local governments, and NGOs to build smarter, more
+responsive, and more sustainable communities.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 📍 **Issue Reporting**  
+  Citizens can report local issues like potholes, garbage dumps, water leaks, or broken
+  streetlights. Issues can be upvoted by others to prioritize action.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🤝 **Community & Charity Events**  
+  Organizations and NGOs can host events such as blood donation camps, beach cleanups, or
+  educational drives. Users can join events and make a real-world impact.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 🪙 **Deed Points & Badges System**  
+  Every action — from reporting an issue to donating or volunteering — earns users Deed Points.
+  These can unlock badges, track community impact, and encourage continued involvement.
+
+- 📊 **Smart Event Scoring via ChatGPT/Gemini API**  
+  Uses AI to automatically validate events and assign appropriate Deed Points based on effort,
+  hours, skills required, and social relevance.
+
+- 📱 **Built with Flutter**  
+  Smooth, cross-platform mobile app UI powered by Flutter and Firebase.
+
+---
+
+## 🧠 AI Deed Points System
+
+CitySync uses **ChatGPT/Gemini APIs** to assign Deed Points and validate community contributions.
+
+---
+Citysync
+Dashboard: [https://github.com/Malay1121/citysync_dashboard](https://github.com/Malay1121/citysync_dashboard)
