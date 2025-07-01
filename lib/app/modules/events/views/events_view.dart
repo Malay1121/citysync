@@ -176,127 +176,150 @@ class EventsView extends GetView<EventsController> {
                                 }
                                 bool organizationExist =
                                     snapshot.data!.docs.isNotEmpty;
-                                return GestureDetector(
-                                  onTap:
-                                      () => Get.toNamed(
-                                        organizationExist
-                                            ? Routes.CREATE_EVENT
-                                            : Routes.CREATE_ORGANIZATION,
-                                      ),
-                                  child: Container(
-                                    width: 328.w(context),
-                                    height: 53.h(context),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: ColorStyle.greyscale100,
-                                      ),
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 8.w(context),
-                                      vertical: 8.h(context),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          organizationExist
-                                              ? Icons.add
-                                              : Icons.business,
-                                          size: 20.t(context),
-                                          color: ColorStyle.neutralGrey2600,
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap:
+                                          () => Get.toNamed(
+                                            organizationExist
+                                                ? Routes.CREATE_EVENT
+                                                : Routes.CREATE_ORGANIZATION,
+                                          ),
+                                      child: Container(
+                                        width: 328.w(context),
+                                        height: 53.h(context),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: ColorStyle.greyscale100,
+                                          ),
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
                                         ),
-                                        SizedBox(width: 12.w(context)),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 8.w(context),
+                                          vertical: 8.h(context),
+                                        ),
+                                        child: Row(
                                           children: [
-                                            AppText(
-                                              text:
-                                                  organizationExist
-                                                      ? AppStrings.createAnEvent
-                                                      : AppStrings
-                                                          .createAnOrganization,
-                                              width: 242.w(context),
-                                              style: Styles.Body13pxMedium(
-                                                context,
-                                                ColorStyle.neutralBlack800,
-                                              ),
+                                            Icon(
+                                              organizationExist
+                                                  ? Icons.add
+                                                  : Icons.business,
+                                              size: 20.t(context),
+                                              color: ColorStyle.neutralGrey2600,
                                             ),
-                                            if (!organizationExist)
-                                              SizedBox(height: 4.h(context)),
-                                            if (!organizationExist)
-                                              AppText(
-                                                text:
-                                                    AppStrings
-                                                        .requiredToHostAnEvent,
-                                                width: 242.w(context),
-                                                style: Styles.Body11pxRegular(
-                                                  context,
-                                                  ColorStyle.neutralGrey600,
+                                            SizedBox(width: 12.w(context)),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                AppText(
+                                                  text:
+                                                      organizationExist
+                                                          ? AppStrings
+                                                              .createAnEvent
+                                                          : AppStrings
+                                                              .createAnOrganization,
+                                                  width: 242.w(context),
+                                                  style: Styles.Body13pxMedium(
+                                                    context,
+                                                    ColorStyle.neutralBlack800,
+                                                  ),
                                                 ),
-                                              ),
+                                                if (!organizationExist)
+                                                  SizedBox(
+                                                    height: 4.h(context),
+                                                  ),
+                                                if (!organizationExist)
+                                                  AppText(
+                                                    text:
+                                                        AppStrings
+                                                            .requiredToHostAnEvent,
+                                                    width: 242.w(context),
+                                                    style:
+                                                        Styles.Body11pxRegular(
+                                                          context,
+                                                          ColorStyle
+                                                              .neutralGrey600,
+                                                        ),
+                                                  ),
+                                              ],
+                                            ),
+                                            Spacer(),
+                                            Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 20.t(context),
+                                              color: ColorStyle.greyscale700,
+                                            ),
                                           ],
                                         ),
-                                        Spacer(),
-                                        Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          size: 20.t(context),
-                                          color: ColorStyle.greyscale700,
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    if (organizationExist)
+                                      SizedBox(height: 10.h(context)),
+                                    if (organizationExist)
+                                      GestureDetector(
+                                        onTap:
+                                            () => Get.toNamed(
+                                              Routes.MANAGE_EVENTS,
+                                            ),
+                                        child: Container(
+                                          width: 328.w(context),
+                                          height: 53.h(context),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: ColorStyle.greyscale100,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w(context),
+                                            vertical: 8.h(context),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.settings,
+                                                size: 20.t(context),
+                                                color:
+                                                    ColorStyle.neutralGrey2600,
+                                              ),
+                                              SizedBox(width: 12.w(context)),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  AppText(
+                                                    text:
+                                                        AppStrings.manageEvents,
+                                                    width: 242.w(context),
+                                                    style:
+                                                        Styles.Body13pxMedium(
+                                                          context,
+                                                          ColorStyle
+                                                              .neutralBlack800,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Spacer(),
+                                              Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                size: 20.t(context),
+                                                color: ColorStyle.greyscale700,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 );
                               },
                             ),
-                            SizedBox(height: 10.h(context)),
-                            GestureDetector(
-                              onTap: () => Get.toNamed(Routes.MANAGE_EVENTS),
-                              child: Container(
-                                width: 328.w(context),
-                                height: 53.h(context),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: ColorStyle.greyscale100,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w(context),
-                                  vertical: 8.h(context),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.settings,
-                                      size: 20.t(context),
-                                      color: ColorStyle.neutralGrey2600,
-                                    ),
-                                    SizedBox(width: 12.w(context)),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        AppText(
-                                          text: AppStrings.manageEvents,
-                                          width: 242.w(context),
-                                          style: Styles.Body13pxMedium(
-                                            context,
-                                            ColorStyle.neutralBlack800,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 20.t(context),
-                                      color: ColorStyle.greyscale700,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+
                             SizedBox(height: 20.h(context)),
                             FirestorePagination(
                               query: FirebaseFirestore.instance

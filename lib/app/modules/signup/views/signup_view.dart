@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:citysync/app/helper/all_imports.dart';
 
 import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   const SignupView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignupController>(
@@ -26,10 +24,12 @@ class SignupView extends GetView<SignupController> {
                           children: [
                             SizedBox(height: 34.h(context)),
                             CommonImage(
-                              imageUrl: "",
+                              imageUrl: AppImages.logo,
                               fit: BoxFit.fitHeight,
                               width: 107.w(context),
                               height: 107.h(context),
+                              borderRadius: BorderRadius.circular(12),
+                              type: "asset",
                             ),
                             SizedBox(height: 24.h(context)),
                             AppText(

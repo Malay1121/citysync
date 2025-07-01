@@ -1,0 +1,33 @@
+{
+  "id": "issue_impact_001",
+  "title": "Contaminated Midday Meals in Local Government School",
+  "description": "Students at Government School #14 in Vastral, Ahmedabad, reported nausea and vomiting after consuming the midday meal. Several parents have raised concerns about food safety and hygiene. The incident highlights a recurring issue with quality checks in school food supply chains.",
+  "location": "Vastral, Ahmedabad, Gujarat, India",
+  "issuer": "TURd84kqmOyCVZE5LPazNjp0uHW3",
+  "created_at": "2025-06-30T10:15:00.000Z",
+  "image": "https://firebasestorage.googleapis.com/v0/b/citysync-app.firebasestorage.app/o/issue_pictures%2Fschool_meal.jpg?alt=media&token=edu_meal_incident",
+  "deeds": 7,
+  "problem_type": "Daily",
+  "upvotes": 5,
+  "category": "Public Health & Education"
+}
+{
+  "id": "safe_plate_foundation",
+  "name": "Safe Plate Foundation",
+  "about": "We advocate for safe and nutritious meals in government-run schools. Our mission is to ensure every child receives hygienic, high-quality food through inspections, digital reporting tools, and parent-teacher-community audits.",
+  "admin": "U91AxErM8LPxKaWZ5cX7n0oBhLz1",
+  "website": "https://safeplate.org",
+  "image": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/food-safety-logo-template-2f99aadc6806273e1f8aa3a90e1872cb_screen.jpg",
+  "verified": true
+}
+
+{
+  "id": "event_safefood_001",
+  "title": "Midday Meal Inspection & Awareness Drive at Govt School #14",
+  "description": "Join Safe Plate Foundation for a collaborative inspection drive of the midday meal program at Government School #14. Volunteers will assist experts in hygiene assessment, parent feedback collection, and student health surveys. Data will be submitted to district authorities for immediate action.",
+  "location": "Government School #14, Vastral, Ahmedabad, Gujarat",
+  "organizer": "safe_plate_foundation",
+  "start_time": "2025-07-02T09:30:00.000Z",
+  "category": "Public Health",
+  "image": "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/food-health-safety-drive-poster-template-b3bfa64864f3e48f327fa8f564b4c351_screen.jpg"
+}

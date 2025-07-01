@@ -13,7 +13,7 @@ class HomeController extends CommonController {
     super.onInit();
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.green,
+        statusBarColor: ColorStyle.primary500,
         //or set color with: Color(0xFF0000FF)
         statusBarIconBrightness: Brightness.dark,
       ),

@@ -135,10 +135,6 @@ class CreateIssueController extends CommonController {
     if (await pageValidation()) {
       EasyLoading.show();
 
-      Map organization = await DatabaseHelper.getOrganizationByUser(
-        userId: user?.uid ?? "",
-      );
-
       Map<String, dynamic> issueDetails = {
         "title": titleController.text,
         "description": descriptionController.text,

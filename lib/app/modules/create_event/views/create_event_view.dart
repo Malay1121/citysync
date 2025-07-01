@@ -33,7 +33,6 @@ class CreateEventView extends GetView<CreateEventController> {
                                   size: 24.t(context),
                                 ),
                               ),
-                              SizedBox(width: 16.w(context)),
                               AppText(
                                 text: AppStrings.createAnEvent,
                                 style: Styles.Heading19pxSemibold(

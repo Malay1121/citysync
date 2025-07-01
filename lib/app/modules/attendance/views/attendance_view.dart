@@ -32,12 +32,15 @@ class AttendanceView extends GetView<AttendanceController> {
                           size: 24.t(context),
                         ),
                       ),
-                      AppText(
-                        text: AppStrings.participants,
-                        centered: true,
-                        style: Styles.Heading19pxSemibold(
-                          context,
-                          ColorStyle.greyscale900,
+                      GestureDetector(
+                        onTap: () => print(controller.event),
+                        child: AppText(
+                          text: AppStrings.participants,
+                          centered: true,
+                          style: Styles.Heading19pxSemibold(
+                            context,
+                            ColorStyle.greyscale900,
+                          ),
                         ),
                       ),
                       SizedBox(width: 24.t(context)),
@@ -50,7 +53,7 @@ class AttendanceView extends GetView<AttendanceController> {
                       padding: EdgeInsets.symmetric(horizontal: 16.w(context)),
                       child: Column(
                         children: [
-                          SizedBox(height: 34.h(context)),
+                          SizedBox(height: 34.h(context), width: 100),
 
                           FirestorePagination(
                             query: FirebaseFirestore.instance
@@ -68,6 +71,7 @@ class AttendanceView extends GetView<AttendanceController> {
                             },
                             itemBuilder: (BuildContext context, list, item) {
                               Map registration = list[item].data() as Map;
+                              print("Registration: " + registration.toString());
                               return FutureBuilder(
                                 future: DatabaseHelper.getUser(
                                   userId: getKey(registration, ["user"], ""),
@@ -119,7 +123,7 @@ class AttendanceView extends GetView<AttendanceController> {
                                             context,
                                             ColorStyle.neutralBlack800,
                                           ),
-                                          width: 224.w(context),
+                                          width: 220.w(context),
                                         ),
                                         SizedBox(width: 6.w(context)),
                                         Checkbox(

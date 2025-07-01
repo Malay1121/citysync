@@ -21,7 +21,7 @@ responsive, and more sustainable communities.
   Every action — from reporting an issue to donating or volunteering — earns users Deed Points.
   These can unlock badges, track community impact, and encourage continued involvement.
 
-- 📊 **Smart Event Scoring via ChatGPT/Gemini API**  
+- 📊 **Smart Event Scoring via Gemini API**  
   Uses AI to automatically validate events and assign appropriate Deed Points based on effort,
   hours, skills required, and social relevance.
 
@@ -32,7 +32,7 @@ responsive, and more sustainable communities.
 
 ## 🧠 AI Deed Points System
 
-CitySync uses **ChatGPT/Gemini APIs** to assign Deed Points and validate community contributions.
+CitySync uses **Gemini APIs** to assign Deed Points and validate community contributions.
 
 ---
 Citysync

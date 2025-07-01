@@ -22,7 +22,7 @@ class HomeView extends GetView<HomeController> {
                       children: [
                         Container(
                           width: 360.w(context),
-                          height: 176.h(context),
+                          height: 100.h(context),
                           decoration: BoxDecoration(
                             color: ColorStyle.primary500,
                             borderRadius: BorderRadius.only(
@@ -164,6 +164,8 @@ class HomeView extends GetView<HomeController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              SizedBox(height: 16.h(context)),
+                              CommonTextField(hintText: AppStrings.search),
                               SizedBox(height: 24.h(context)),
                               AppText(
                                 text: AppStrings.sharingKindness,
