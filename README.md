@@ -1,34 +1,7 @@
 # 🌆 CitySync
 
-**CitySync** is a mobile-first civic engagement platform that empowers citizens to report public
-issues, participate in local community events, and earn **Deed Points** for contributing to social
-good. It bridges the gap between citizens, local governments, and NGOs to build smarter, more
-responsive, and more sustainable communities.
+Citysync is a community-powered platform that enables citizens to report local civic issues, participate in charity and community events, and contribute to building smarter, more sustainable cities. It connects individuals, governments, and organizations to take collective action and rewards them for their impact. CitySync offers features like Issue reporting, Community events, Rewards system, Rewards system, Government dashboard etc. Issue reporting: Citizens can report issues by sharing photo, description, and the location, later, other citizens can upvote the issue and show it support. Based on the upvotes, the issues are prioritized and are reported on the government dashboard. Government dashboard contains all the issues reported by the citizens, and a small summary of what kind of issues are faced in each area and how can they be fixed. The application also contains a separate space where non profit organizations can organize events and find people who wants to contribute or volunteer. Every action done on the application rewards the user with deed points based on the difficulty of the action. Deed points is a reward system that keeps the citizens motivated to work towards the betterment of the society. Demo Video: https://www.youtube.com/watch?v=HTcYBYqZrYA
 
----
-
-## 🚀 Features
-
-- 📍 **Issue Reporting**  
-  Citizens can report local issues like potholes, garbage dumps, water leaks, or broken
-  streetlights. Issues can be upvoted by others to prioritize action.
-
-- 🤝 **Community & Charity Events**  
-  Organizations and NGOs can host events such as blood donation camps, beach cleanups, or
-  educational drives. Users can join events and make a real-world impact.
-
-- 🪙 **Deed Points & Badges System**  
-  Every action — from reporting an issue to donating or volunteering — earns users Deed Points.
-  These can unlock badges, track community impact, and encourage continued involvement.
-
-- 📊 **Smart Event Scoring via Gemini API**  
-  Uses AI to automatically validate events and assign appropriate Deed Points based on effort,
-  hours, skills required, and social relevance.
-
-- 📱 **Built with Flutter**  
-  Smooth, cross-platform mobile app UI powered by Flutter and Firebase.
-
----
 
 ## 🧠 AI Deed Points System
 
